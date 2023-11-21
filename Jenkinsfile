@@ -1,6 +1,9 @@
 //declarative pipeline
 
 pipeline{
+      agent {
+        label "jenkins-agent"
+    }
   stages{
         stage("Checkout from SCM"){
             steps {

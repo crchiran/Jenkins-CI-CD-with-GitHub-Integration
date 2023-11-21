@@ -13,7 +13,7 @@ pipeline {
 
         stage("Checkout from SCM") {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[credentialsId: 'github', url: 'git@github.com:crchiran/jenkins-ci-cd-with-github-integration.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/crchiran/Jenkins-CI-CD-with-GitHub-Integration']]])
             }
         }
 

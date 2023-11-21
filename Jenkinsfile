@@ -1,26 +1,26 @@
 //declarative pipeline
 
-pipeline{
-      agent {
+pipeline {
+    agent {
         label "jenkins-agent"
     }
-  stages{
-        stage("Checkout from SCM"){
+    stages {
+        stage("Checkout from SCM") {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'git@github.com:crchiran/jenkins-ci-cd-with-github-integration.git'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[credentialsId: 'github', url: 'git@github.com:crchiran/jenkins-ci-cd-with-github-integration.git']]])
             }
         }
 
-     stage('Build'){
-      steps{
-        sh 'npm install'
-      }
-     }
-     
-     stage('Test'){
-        steps{
-          sh 'npm test'
-      }
-     }
-  }
-  }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+    }
+}

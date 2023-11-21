@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        APP_NAME = "Jenkins-CI-CD-with-GitHub-Integration"
+        APP_NAME = "jenkins-ci-cd-with-gitHub-integration"
         RELEASE = "1.0.0"
         DOCKER_USER = "madheit"
         DOCKER_PASS = 'docker-token'

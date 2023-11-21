@@ -2,12 +2,11 @@
 
 pipeline{
   stages{
-    stage('Clone'){
-      steps {
-        git branch: 'main'
-        url: 'git@github.com:crchiran/jenkins-ci-cd-with-github-integration.git'
-      }
-    }
+        stage("Checkout from SCM"){
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/dmancloud/complete-prodcution-e2e-pipeline'
+            }
+        }
      stage('Build'){
       steps{
         sh 'npm install'

@@ -10,14 +10,12 @@ pipeline{
     }
      stage('Build'){
       steps{
-        sh ''
-        docker build -t nodeapp:${BUILD_NUMBER}
+        sh 'npm install'
       }
      }
      stage('Test'){
         steps{
-          sh ''
-          docker run -it nodeapp:$(BUILD_NUMBER)
+          sh 'npm test'
       }
      }
   }

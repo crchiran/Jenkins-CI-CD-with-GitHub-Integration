@@ -4,28 +4,21 @@ pipeline{
   stages{
     stage('Clone'){
       steps {
-        git branch: 'master'
-        url: '"
+        git branch: 'main'
+        url: 'git@github.com:crchiran/jenkins-ci-cd-with-github-integration.git'
       }
     }
      stage('Build'){
       steps{
-        sh ''
+        sh 'npm install'
         docker build -t nodeapp:${BUILD_NUMBER}
       }
      }
      stage('Test'){
         steps{
-          sh ''
+          sh 'npm test'
           docker run -it nodeapp:$(BUILD_NUMBER)
       }
      }
-      stage('Package'){
-        steps{
-          sh ''
-          docker push yashpimple22/nodeapp:$(BUILD_NUMBER)
-          '''
-      }
-     }
   }
-}
+  }

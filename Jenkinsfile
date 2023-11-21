@@ -1,9 +1,19 @@
-//declarative pipeline
+// Declarative pipeline
 
 pipeline {
     agent {
         label "jenkins-agent"
     }
+
+    environment {
+        APP_NAME = "Jenkins-CI-CD-with-GitHub-Integration"
+        RELEASE = "1.0.0"
+        DOCKER_USER = "madheit"
+        DOCKER_PASS = 'docker-token'
+        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    }
+
     stages {
         stage("Cleanup Workspace") {
             steps {
@@ -17,20 +27,21 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage("Build & Push Docker Image") {
             steps {
                 script {
-                    docker.build("nodeapp:${BUILD_NUMBER}")
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
+
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
                 }
             }
+
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    docker.run("nodeapp:${BUILD_NUMBER}")
-                }
-            }
-        }
     }
 }

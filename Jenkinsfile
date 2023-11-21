@@ -1,8 +1,11 @@
-//declarative pipeline
+// Declarative pipeline
 
 pipeline {
     agent {
         label "jenkins-agent"
+    }
+    environment {
+        DOCKER_IMAGE = "nodeapp:${BUILD_NUMBER}"
     }
     stages {
         stage("Cleanup Workspace") {
@@ -19,13 +22,17 @@ pipeline {
 
         stage('Build') {
             steps {
-                docker build -t nodeapp:${BUILD_NUMBER}
+                script {
+                    sh "docker build -t ${DOCKER_IMAGE} -f Dockerfile ."
+                }
             }
         }
 
         stage('Test') {
             steps {
-                docker run -it nodeapp:$(BUILD_NUMBER)
+                script {
+                    sh "docker run -it ${DOCKER_IMAGE}"
+                }
             }
         }
     }

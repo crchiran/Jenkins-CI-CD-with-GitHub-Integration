@@ -11,7 +11,7 @@ pipeline {
         DOCKER_USER = "madheit"
         DOCKER_PASS = 'docker-token'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = IMAGE_TAG = "${DOCKER_USER}/${RELEASE}-${BUILD_NUMBER}"
+        IMAGE_TAG =  "${DOCKER_USER}/${RELEASE}-${BUILD_NUMBER}"
     }
 
     stages {

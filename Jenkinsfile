@@ -10,8 +10,7 @@ pipeline {
     DOCKER_PASS = 'docker-token'
     IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-    DOCKER_REGISTRY = "https://hub.docker.com" // Add the Docker Hub registry URL here
-  }
+   }
 
   stages {
     stage("Cleanup Workspace") {
@@ -29,11 +28,11 @@ pipeline {
     stage("Build & Push Docker Image") {
       steps {
         script {
-          docker.withRegistry(DOCKER_REGISTRY, DOCKER_PASS) {
+          docker.withRegistry('', DOCKER_PASS) {
             docker_image = docker.build "${IMAGE_NAME}" // Add the registry URL to the 'withRegistry' call
           }
 
-          docker.withRegistry(DOCKER_REGISTRY, DOCKER_PASS) {
+          docker.withRegistry('', DOCKER_PASS) {
             docker_image.push("${IMAGE_TAG}")
             docker_image.push('latest')
           }
